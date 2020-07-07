@@ -1,7 +1,7 @@
 <?php
 
 
-namespace ByteDance\Douyin\Douyin;
+namespace ByteDance\Api\Api;
 
 
 class Auth
