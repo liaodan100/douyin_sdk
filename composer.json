@@ -1,0 +1,19 @@
+{
+    "name": "liaodan/douyin_sdk",
+    "description": "字节跳动抖音开放平台",
+    "authors": [
+        {
+            "name": "廖丹",
+            "email": "silent00@sina.cn"
+        }
+    ],
+    "require": {
+        "php" : ">7.0"
+
+    },
+    "autoload" : {
+        "psr-4": {
+            "ByteDance\\Douyin" : "src"
+        }
+    }
+}
