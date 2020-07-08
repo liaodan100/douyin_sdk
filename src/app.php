@@ -1,7 +1,7 @@
 <?php
 
 
-namespace ByteDance\Douyin;
+namespace ByteDance;
 
 class App
 {
