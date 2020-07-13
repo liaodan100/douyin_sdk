@@ -8,27 +8,25 @@ use Curl\Curl;
 
 class Oauth extends BaseApi
 {
-    public function connect()
+    public function connect(array $scope , string $redirect_url , string $state = '' )
     {
         $api_url = self::BASE_API . '/platform/oauth/connect/';
         $params = [
             'client_key'    => $this->client_key,
             'response_type' => 'code',
-            'scope'         => '',
-            'redirect_uri'  => '',
-
+            'scope'         => implode(',' , $scope),
+            'redirect_uri'  => $redirect_url,
         ];
 
-        try {
-            $curl = new \Curl\Curl();
-            $curl->get($api_url , $params);
-            return $curl->response;
-        }catch (ApiExcepion $e){
-            return $e->getMessage();
+        if($state){
+            $params['state'] = $state;
         }
+
+        return $api_url . '?' . http_build_query($params);
+
     }
 
-    public function getAccessToken($code)
+    public function access_token($code)
     {
         $api_url = self::BASE_API . '/oauth/access_token/';
         $params = [
@@ -37,5 +35,37 @@ class Oauth extends BaseApi
             'code'          => $code ,
             'grant_type'    => 'authorization_code'
         ];
+
+        return $this->https_get($api_url , $params);
+
+    }
+
+    /**
+     * 刷新access_token或续期不会改变refresh_token的有效期
+     * @param $refresh_token
+     * @return Oauth
+     */
+    public function refresh_token(string $refresh_token){
+        $api_url = self::BASE_API . '/oauth/refresh_token/';
+        $params = [
+            'client_key'   => $this->client_key,
+            'grant_type'    => 'refresh_token',
+            'refresh_token' => $refresh_token
+        ];
+        return $this->https_get($api_url , $params);
+    }
+
+    /**
+     * 刷新refresh_token
+     * @param string $refresh_token
+     * @return Oauth
+     */
+    public function renew_refresh_token(string $refresh_token){
+        $api_url = self::BASE_API . '/oauth/renew_refresh_token/';
+        $params = [
+            'client_key'    => $this->client_key,
+            'refresh_token' => $refresh_token
+        ];
+        return $this->https_get($api_url , $params);
     }
 }
