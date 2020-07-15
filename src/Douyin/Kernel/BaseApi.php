@@ -3,7 +3,6 @@
 
 namespace ByteDance\Douyin\Kernel;
 use ByteDance\ApiExcepion;
-use Curl\Curl;
 
 /**
  * 内核
