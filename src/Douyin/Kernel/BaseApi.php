@@ -12,6 +12,7 @@ use ByteDance\ApiExcepion;
 class BaseApi
 {
     const BASE_API = "https://open.douyin.com";
+    const BASE_TOUTIAO_API = "https://open.snssdk.com";
     public $client_key = null;
     public $client_secret = null;
 

@@ -6,7 +6,7 @@ use ByteDance\ApiExcepion;
 use ByteDance\Douyin\Kernel\BaseApi;
 use Curl\Curl;
 
-class Oauth extends BaseApi
+class Douyin extends BaseApi
 {
     public function connect(array $scope , string $redirect_url , string $state = '' )
     {
@@ -65,6 +65,16 @@ class Oauth extends BaseApi
         $params = [
             'client_key'    => $this->client_key,
             'refresh_token' => $refresh_token
+        ];
+        return $this->https_get($api_url , $params);
+    }
+
+    public function client_token(){
+        $api_url = self::BASE_API . '/oauth/client_token/';
+        $params = [
+            'client_key'    => $this->client_key,
+            'client_secret' => $this->client_secret,
+            'grant_type'    => 'client_credential'
         ];
         return $this->https_get($api_url , $params);
     }
